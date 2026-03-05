@@ -1,0 +1,11 @@
+# all
+__pycache__
+dist/
+.venv
+.coverage
+*_cache/
+coverage.xml
+
+# uv
+build
+*.egg-info

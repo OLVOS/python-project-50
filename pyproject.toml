@@ -1,0 +1,20 @@
+[project]
+name = "hexlet-code"
+authors = [
+    {name = "Olvos", email = "anhkrem@gmail.com"},
+]
+version = "0.1.0"
+description = "Training project..."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
+
+
+[project.scripts]
+gendiff = "gendiff.scripts.gendiff:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+    "ruff>=0.15.4",
+]
