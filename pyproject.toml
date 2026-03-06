@@ -9,15 +9,19 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = []
 
+[project.urls]
+Homepage = "https://github.com/olvos/python-project-50"
+Telegram = "https://t.me/olwos"
+
 
 [project.scripts]
 gendiff = "gendiff.scripts.gendiff:main"
 
-[dependency-groups]
-dev = [
-    "pytest>=9.0.2",
-    "ruff>=0.15.4",
-]
+#[dependency-groups]
+#dev = [
+#    "pytest>=9.0.2",
+#    "ruff>=0.15.4",
+#]
 
 [build-system]
 requires = ["hatchling"]

@@ -9,3 +9,6 @@ coverage.xml
 # uv
 build
 *.egg-info
+
+#sandbox
+tests/sandbox.py
