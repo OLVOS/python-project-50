@@ -6,7 +6,7 @@ authors = [
 version = "0.1.0"
 description = "Training project..."
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.10"
 dependencies = []
 
 [project.urls]
@@ -17,11 +17,12 @@ Telegram = "https://t.me/olwos"
 [project.scripts]
 gendiff = "gendiff.scripts.gendiff:main"
 
-#[dependency-groups]
-#dev = [
-#    "pytest>=9.0.2",
-#    "ruff>=0.15.4",
-#]
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+    "pytest-cov>=5.0.0",
+    "ruff>=0.15.5",
+]
 
 [build-system]
 requires = ["hatchling"]
