@@ -12,7 +12,3 @@ def is_unchanged(key, data1, data2): return key in data1 and key in data2
 
 
 def json_format(val): return json.dumps(val)
-
-
-def hello():
-    print('hello')
