@@ -19,4 +19,8 @@ def is_removed(key, data): return key not in data
 def is_unchanged(key, data1, data2): return key in data1 and key in data2
 
 
-def set_format(val): return json.dumps(val)
+def set_format(val):
+    if isinstance(val, str):
+        return f'{val}'
+    else:
+        return json.dumps(val)
