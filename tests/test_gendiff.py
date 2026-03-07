@@ -18,6 +18,11 @@ def expected():
     return path.read_text()
 
 
-def test_gendiff(get_path, expected):
+def test_gendiff_json(get_path, expected):
     f1, f2 = get_path('file1.json'), get_path('file2.json')
+    assert generate_diff(f1, f2) == expected
+
+
+def test_gendiff_yml(get_path, expected):
+    f1, f2 = get_path('filepath1.yml'), get_path('filepath2.yml')
     assert generate_diff(f1, f2) == expected

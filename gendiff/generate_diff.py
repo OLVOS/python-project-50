@@ -2,8 +2,8 @@ from gendiff.utils import (
     is_added,
     is_removed,
     is_unchanged,
-    json_format,
     parsing,
+    set_format,
 )
 
 
@@ -13,7 +13,7 @@ def generate_diff(path1, path2):
     line = ['{']
 
     for k in keys:
-        val1, val2 = json_format(file1.get(k)), json_format(file2.get(k))
+        val1, val2 = set_format(file1.get(k)), set_format(file2.get(k))
 
         if is_unchanged(k, file1, file2):
             if file2[k] != file1[k]:
