@@ -1,4 +1,5 @@
-from gendiff.utils import parsing, stylish
+from gendiff.formatters import plain, stylish
+from gendiff.utils import parsing
 
 
 def generate_diff(path1, path2, format_name='stylish'):
@@ -23,6 +24,8 @@ def generate_diff(path1, path2, format_name='stylish'):
 
     if format_name == 'stylish':
         return stylish(build_diff(file1, file2))
+    if format_name == 'plain':
+        return plain(build_diff(file1, file2))
 
 
 def is_both(key, data1, data2): return\
