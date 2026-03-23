@@ -44,7 +44,7 @@ def render_value(replacer=' ', spaces=4, frmt=format_value):
 
         for index, (k, v) in enumerate(data.items()):
             res.append(
-                f'{TAB}{frmt(k)}: {make_render(v, depth=depth + 1)}')
+                f'{TAB}{k}: {make_render(v, depth=depth + 1)}')
 
         res.append(CLOSE_TAB)
         return '\n'.join(res)
