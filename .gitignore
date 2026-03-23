@@ -12,3 +12,4 @@ build
 
 #sandbox
 tests/sandbox.py
+.editorconfig

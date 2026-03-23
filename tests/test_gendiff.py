@@ -33,3 +33,8 @@ def test_gendiff_yml(get_path, expected):
 def test_gendiff_format_plain(get_path, expected):
     f1, f2 = get_path('filepath1.yml'), get_path('filepath2.yml')
     assert generate_diff(f1, f2, 'plain') == expected('expected_plain.txt')
+
+
+def test_gendiff_format_json(get_path, expected):
+    f1, f2 = get_path('filepath1.yml'), get_path('filepath2.yml')
+    assert generate_diff(f1, f2, 'json') == expected('expected_json.txt')

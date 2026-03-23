@@ -1,7 +1,7 @@
 
 
-tab_status = {
-    'unchanged': '  ', 'added': '+ ', 'removed': '- ',
+TAB_STATUSES = {
+    'both': '  ', 'added': '+ ', 'removed': '- ',
     'nested': '  ', 'changed': {'old': '- ', 'new': '+ '}
 }
 

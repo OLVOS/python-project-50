@@ -1,46 +1,36 @@
-from gendiff.CONST import tab_status
-from gendiff.utils import format_value, make_tab
+from gendiff.CONST import TAB_STATUSES
+from gendiff.utils import make_tab, render_value
 
 
 def make_tab_status(status: str, tab):
     prefix = tab[:-2]
     if status == 'changed':
-        return f'{prefix}{tab_status[status]["old"]}', \
-               f'{prefix}{tab_status[status]["new"]}'
-    return f'{prefix}{tab_status[status]}'
+        return f'{prefix}{TAB_STATUSES[status]["old"]}', \
+               f'{prefix}{TAB_STATUSES[status]["new"]}'
+    return f'{prefix}{TAB_STATUSES[status]}'
 
 
-def render_value(data, replacer=' ', spaces_count=4, depth=1):
-    (TAB, CLOSE_TAB), res = make_tab(replacer, spaces_count, depth), [' {']
+def stylish(data, replacer=' ', spaces=4, depth=1):
+    (TAB, CLOSE_TAB), res = make_tab(replacer, spaces, depth), ['{']
+    render = render_value(replacer, spaces)
 
-    if not isinstance(data, dict):
-        return '' if data == '' else ' ' + format_value(data)
+    for node in data:
+        status, key, val = node['status'], node['key'], ''
 
-    for k, v in data.items():
-        res.append(f'{TAB}{k}:{render_value(v, depth=depth + 1)}')
-
-    res.append(CLOSE_TAB)
-    return '\n'.join(res)
-
-
-def stylish(data, replacer=' ', spaces_count=4, depth=1):
-    (TAB, CLOSE_TAB), res = make_tab(replacer, spaces_count, depth), ['{']
-
-    for i in data:
-        status, key = i['status'], i['key']
         if status == 'changed':
             tab_old, tab_new = make_tab_status(status, TAB)
             res.append(
-                f'{tab_old}{key}:{render_value(i["old"], depth=depth + 1)}\n'
-                f'{tab_new}{key}:{render_value(i["new"], depth=depth + 1)}')
+                f'{tab_old}{key}: {render(node["old"], depth=depth + 1)}\n'
+                f'{tab_new}{key}: {render(node["new"], depth=depth + 1)}')
+            continue
 
         elif status == 'nested':
-            value = f' {stylish(i["children"], depth=depth + 1)}'
-            res.append(f'{make_tab_status(status, TAB)}{key}:{value}')
+            val = f'{stylish(node["children"], depth=depth + 1)}'
 
-        else:
-            value = f'{render_value(i["value"], depth=depth + 1)}'
-            res.append(f'{make_tab_status(status, TAB)}{key}:{value}')
+        elif status in ('added', 'removed', 'both'):
+            val = f'{render(node["value"], depth=depth + 1)}'
+
+        res.append(f'{make_tab_status(status, TAB)}{key}: {val}')
 
     res.append(CLOSE_TAB)
     return '\n'.join(res)

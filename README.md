@@ -3,7 +3,7 @@
 [![gendiff_ci](https://github.com/OLVOS/python-project-50/actions/workflows/ci.yml/badge.svg)](https://github.com/OLVOS/python-project-50/actions/workflows/ci.yml)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=OLVOS_python-project-50&metric=coverage)](https://sonarcloud.io/summary/new_code?id=OLVOS_python-project-50)
 
-[![asciicast](https://asciinema.org/a/jKYIYFjQPDDNGGam.svg)](https://asciinema.org/a/jKYIYFjQPDDNGGam)
+[![asciicast](https://asciinema.org/a/tZqZmhXUkFWhBlZZ.svg)](https://asciinema.org/a/tZqZmhXUkFWhBlZZ)
 
 
 ## Author
