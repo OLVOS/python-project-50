@@ -10,7 +10,7 @@ def parsing(path):
 
         if end == '.json':
             return json.load(f)
-        if end == '.yml' or '.yaml':
+        if end in ('.yml', '.yaml'):
             return yaml.safe_load(f)
 
 
@@ -36,17 +36,15 @@ def format_plain_val(value):
 
 def render_value(replacer=' ', spaces=4, frmt=format_value):
 
-    def make_render(data, depth=1, end=''):
+    def make_render(data, depth=1):
         (TAB, CLOSE_TAB), res = make_tab(replacer, spaces, depth), ['{']
 
         if not isinstance(data, dict):
             return '' if data == '' else frmt(data)
 
         for index, (k, v) in enumerate(data.items()):
-            if frmt.__name__ == 'dumps':
-                end = ',' if index < len(data) - 1 else ''
             res.append(
-                f'{TAB}{frmt(k)}: {make_render(v, depth=depth + 1)}{end}')
+                f'{TAB}{frmt(k)}: {make_render(v, depth=depth + 1)}')
 
         res.append(CLOSE_TAB)
         return '\n'.join(res)

@@ -1,6 +1,8 @@
 from gendiff.formatters import json, plain, stylish
 from gendiff.utils import parsing
 
+FORMATTERS = {'stylish': stylish, 'plain': plain, 'json': json}
+
 
 def generate_diff(path1, path2, format_name='stylish'):
     file1, file2 = parsing(path1), parsing(path2)
@@ -11,23 +13,22 @@ def generate_diff(path1, path2, format_name='stylish'):
         for k in keys:
             if is_added(k, f1, f2):
                 line.append(added_format(k, f2))
+
             elif is_removed(k, f1, f2):
                 line.append(removed_format(k, f1))
+
             elif is_nested(k, f1, f2):
                 line.append(nested_format(k, f1, f2, build_diff))
+
             elif is_changed(k, f1, f2):
                 line.append(changed_format(k, f1, f2))
-            else:
+
+            elif is_both(k, f1, f2):
                 line.append(both_format(k, f2))
 
         return line
 
-    if format_name == 'stylish':
-        return stylish(build_diff(file1, file2))
-    if format_name == 'plain':
-        return plain(build_diff(file1, file2))
-    if format_name == 'json':
-        return json(build_diff(file1, file2))
+    return FORMATTERS[format_name](build_diff(file1, file2))
 
 
 def is_both(key, data1, data2): return\
