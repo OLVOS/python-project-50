@@ -31,16 +31,17 @@ def generate_diff(path1, path2, format_name='stylish'):
     return FORMATTERS[format_name](build_diff(file1, file2))
 
 
-def is_both(key, data1, data2): return\
-        key in data1 and key in data2
-def is_added(key, data1, data2): return\
-        key in data2 and key not in data1
-def is_removed(key, data1, data2): return\
-        key not in data2 and key in data1
-def is_changed(key, data1, data2): return\
-        is_both(key, data1, data2) and data1[key] != data2[key]
-def is_nested(key, data1, data2): return\
-        isinstance(data1[key], dict) and isinstance(data2[key], dict)
+def is_both(key, data1, data2): return (
+        key in data1 and key in data2)
+def is_added(key, data1, data2): return (
+        key in data2 and key not in data1)
+def is_removed(key, data1, data2): return (
+        key not in data2 and key in data1)
+def is_changed(key, data1, data2): return (
+        is_both(key, data1, data2) and data1[key] != data2[key])
+def is_nested(key, data1, data2): return (
+        is_both(key, data1, data2)
+        and isinstance(data1[key], dict) and isinstance(data2[key], dict))
 
 
 def both_format(k, f2): return {

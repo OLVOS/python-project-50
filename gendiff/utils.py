@@ -29,9 +29,10 @@ def format_value(val):
     return str(val)
 
 
-def format_plain_val(value):
-    val = f"'{value}'" if isinstance(value, str) else format_value(value)
-    return '[complex value]' if isinstance(value, dict) else val
+def format_plain(value):
+    if isinstance(value, dict):
+        return '[complex value]'
+    return f"'{value}'" if isinstance(value, str) else format_value(value)
 
 
 def render_value(replacer=' ', spaces=4, frmt=format_value):
@@ -40,11 +41,11 @@ def render_value(replacer=' ', spaces=4, frmt=format_value):
         (TAB, CLOSE_TAB), res = make_tab(replacer, spaces, depth), ['{']
 
         if not isinstance(data, dict):
-            return '' if data == '' else frmt(data)
+            return frmt(data)
 
-        for index, (k, v) in enumerate(data.items()):
-            res.append(
-                f'{TAB}{k}: {make_render(v, depth=depth + 1)}')
+        for k, v in data.items():
+            value = make_render(v, depth=depth + 1)
+            res.append(f'{TAB}{k}: {value}')
 
         res.append(CLOSE_TAB)
         return '\n'.join(res)

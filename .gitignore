@@ -5,6 +5,7 @@ dist/
 .coverage
 *_cache/
 coverage.xml
+*.pyc
 
 # uv
 build

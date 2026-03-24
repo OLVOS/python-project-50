@@ -1,24 +1,24 @@
-from gendiff.utils import format_plain_val
+from gendiff.utils import format_plain
 
 
 def plain(data, path=''):
     res = []
 
-    for i in data:
-        curr_path = path + i['key']
-        value = format_plain_val(i['value']) if 'value' in i else ''
+    for node in data:
+        curr_path = path + node['key']
+        value = format_plain(node['value']) if 'value' in node else ''
 
-        if i['status'] == 'nested':
-            res.append(plain(i['children'], path=f'{path + i["key"]}' + '.'))
+        if node['status'] == 'nested':
+            res.append(plain(node['children'], path=f'{curr_path}.'))
 
-        elif i['status'] == 'added':
+        elif node['status'] == 'added':
             res.append(f"Property '{curr_path}' was added with value: {value}")
 
-        elif i['status'] == 'removed':
+        elif node['status'] == 'removed':
             res.append(f"Property '{curr_path}' was removed")
 
-        elif i['status'] == 'changed':
-            old, new = format_plain_val(i['old']), format_plain_val(i['new'])
+        elif node['status'] == 'changed':
+            old, new = format_plain(node['old']), format_plain(node['new'])
             res.append(
                 f"Property '{curr_path}' was updated. From {old} to {new}")
 
