@@ -17,18 +17,18 @@ def stylish(data, replacer=' ', spaces=4, depth=1):
     for node in data:
         status, key, val = node['status'], node['key'], ''
 
-        if status == 'changed':
+        if status in ('added', 'removed', 'both'):
+            val = render(node["value"], depth=depth + 1)
+
+        elif status == 'nested':
+            val = stylish(node["children"], depth=depth + 1)
+
+        elif status == 'changed':
             tab_old, tab_new = make_tab_status(status, TAB)
             res.append(
                 f'{tab_old}{key}: {render(node["old"], depth=depth + 1)}\n'
                 f'{tab_new}{key}: {render(node["new"], depth=depth + 1)}')
             continue
-
-        elif status == 'nested':
-            val = f'{stylish(node["children"], depth=depth + 1)}'
-
-        elif status in ('added', 'removed', 'both'):
-            val = f'{render(node["value"], depth=depth + 1)}'
 
         res.append(f'{make_tab_status(status, TAB)}{key}: {val}')
 
