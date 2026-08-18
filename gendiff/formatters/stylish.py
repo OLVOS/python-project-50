@@ -1,4 +1,4 @@
-from gendiff.CONST import TAB_STATUSES
+from gendiff.const import TAB_STATUSES
 from gendiff.utils import make_tab, render_value
 
 

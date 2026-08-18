@@ -1,5 +1,5 @@
 from gendiff.formatters import json, plain, stylish
-from gendiff.utils import parsing
+from gendiff.parser import parsing
 
 FORMATTERS = {'stylish': stylish, 'plain': plain, 'json': json}
 
