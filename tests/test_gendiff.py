@@ -3,12 +3,13 @@ from pathlib import Path
 import pytest
 
 from gendiff import generate_diff
+from gendiff.parser import parsing
 
 
 @pytest.fixture
 def get_path():
     def inner(test_filename):
-        return Path(__file__).parent / 'test_data' / test_filename
+        return parsing(Path(__file__).parent / 'test_data' / test_filename)
     return inner
 
 

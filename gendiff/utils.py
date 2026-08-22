@@ -1,17 +1,3 @@
-import json
-from pathlib import Path
-
-import yaml
-
-
-def parsing(path):
-    with open(path) as f:
-        end = Path(path).suffix
-
-        if end == '.json':
-            return json.load(f)
-        if end in ('.yml', '.yaml'):
-            return yaml.safe_load(f)
 
 
 def make_tab(replacer=' ', spaces=4, depth=1):

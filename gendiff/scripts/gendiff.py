@@ -1,6 +1,7 @@
 import argparse
 
 from gendiff.generate_diff import generate_diff
+from gendiff.parser import parsing
 
 
 def main():
@@ -15,7 +16,11 @@ def main():
                         help='set format of output')
 
     args = parser.parse_args()
-    diff = generate_diff(args.first_file, args.second_file, args.format)
+    diff = generate_diff(
+        parsing(args.first_file),
+        parsing(args.second_file),
+        args.format
+    )
     print(diff)
 
 

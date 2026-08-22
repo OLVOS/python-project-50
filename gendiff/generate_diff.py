@@ -1,34 +1,32 @@
 from gendiff.formatters import json, plain, stylish
-from gendiff.parser import parsing
 
 FORMATTERS = {'stylish': stylish, 'plain': plain, 'json': json}
 
 
-def generate_diff(path1, path2, format_name='stylish'):
-    file1, file2 = parsing(path1), parsing(path2)
+def generate_diff(data1, data2, format_name='stylish'):
 
-    def build_diff(f1, f2):
-        line, keys = [], sorted(set(f1.keys()) | set(f2.keys()))
+    def build_diff(d1, d2):
+        nodes, keys = [], sorted(set(d1.keys()) | set(d2.keys()))
 
         for k in keys:
-            if is_added(k, f1, f2):
-                line.append(added_format(k, f2))
+            if is_added(k, d1, d2):
+                nodes.append(added_format(k, d2))
 
-            elif is_removed(k, f1, f2):
-                line.append(removed_format(k, f1))
+            elif is_removed(k, d1, d2):
+                nodes.append(removed_format(k, d1))
 
-            elif is_nested(k, f1, f2):
-                line.append(nested_format(k, f1, f2, build_diff))
+            elif is_nested(k, d1, d2):
+                nodes.append(nested_format(k, d1, d2, build_diff))
 
-            elif is_changed(k, f1, f2):
-                line.append(changed_format(k, f1, f2))
+            elif is_changed(k, d1, d2):
+                nodes.append(changed_format(k, d1, d2))
 
-            elif is_both(k, f1, f2):
-                line.append(both_format(k, f2))
+            elif is_both(k, d1, d2):
+                nodes.append(both_format(k, d2))
 
-        return line
+        return nodes
 
-    return FORMATTERS[format_name](build_diff(file1, file2))
+    return FORMATTERS[format_name](build_diff(data1, data2))
 
 
 def is_both(key, data1, data2): return (
