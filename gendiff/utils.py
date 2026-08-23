@@ -1,10 +1,10 @@
 
 
-def make_tab(replacer=' ', spaces=4, depth=1):
+def make_tabs(replacer=' ', spaces=4, depth=1):
     spaces_depth = spaces * depth
-    TAB = f'{replacer * spaces_depth}'
-    CLOSE_TAB = f'{replacer * (spaces_depth - spaces)}' + '}'
-    return TAB, CLOSE_TAB
+    tab = replacer * spaces_depth
+    close_tab = replacer * (spaces_depth - spaces) + '}'
+    return tab, close_tab
 
 
 def format_value(val):
@@ -21,19 +21,16 @@ def format_plain(value):
     return f"'{value}'" if isinstance(value, str) else format_value(value)
 
 
-def render_value(replacer=' ', spaces=4, frmt=format_value):
+def render_value(data, replacer=' ', spaces=4, depth=1, frmt=format_value):
+    (tab, close_tab), res = make_tabs(replacer, spaces, depth), ['{']
 
-    def make_render(data, depth=1):
-        (TAB, CLOSE_TAB), res = make_tab(replacer, spaces, depth), ['{']
+    if not isinstance(data, dict):
+        return frmt(data)
 
-        if not isinstance(data, dict):
-            return frmt(data)
+    for k, v in data.items():
+        value = render_value(v, depth=depth + 1)
+        res.append(f'{tab}{k}: {value}')
 
-        for k, v in data.items():
-            value = make_render(v, depth=depth + 1)
-            res.append(f'{TAB}{k}: {value}')
+    res.append(close_tab)
+    return '\n'.join(res)
 
-        res.append(CLOSE_TAB)
-        return '\n'.join(res)
-
-    return make_render
